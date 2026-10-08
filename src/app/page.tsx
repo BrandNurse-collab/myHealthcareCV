@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { createServerSupabaseClient } from "@/lib/supabase/server";
-import { signOut } from "../(auth)/actions";
+import { signOut } from "./(auth)/actions";
 
 interface UploadedCvListRow {
   id: string;

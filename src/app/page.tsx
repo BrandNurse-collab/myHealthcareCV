@@ -268,4 +268,4 @@ function SiteFooter() {
       </div>
     </footer>
   );
-} "Fix homepage"
+}

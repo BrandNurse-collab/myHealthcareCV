@@ -62,8 +62,11 @@ export async function uploadCv(formData: FormData) {
   // sizes or AI latency start pushing this toward the platform's function
   // time limit (see ARCHITECTURE.md § AI architecture for the fast/strong
   // model split this already leans on to keep this step quick).
-  await processCvExtraction(supabase, uploadedCvId, fileType, bytes);
+  const extractionResult = await processCvExtraction(supabase, uploadedCvId, fileType, bytes);
 
+  if (!extractionResult.ok) {
+    redirect(`/dashboard/cvs/${uploadedCvId}?error=` + encodeURIComponent(extractionResult.error));
+  }
   redirect(`/dashboard/cvs/${uploadedCvId}`);
 }
 
@@ -94,9 +97,12 @@ export async function retryExtraction(uploadedCvId: string) {
   }
 
   const bytes = Buffer.from(await (downloaded as Blob).arrayBuffer());
-  await processCvExtraction(supabase, uploadedCvId, fileType, bytes);
+  const extractionResult = await processCvExtraction(supabase, uploadedCvId, fileType, bytes);
 
   revalidatePath(`/dashboard/cvs/${uploadedCvId}`);
+  if (!extractionResult.ok) {
+    redirect(`/dashboard/cvs/${uploadedCvId}?error=` + encodeURIComponent(extractionResult.error));
+  }
   redirect(`/dashboard/cvs/${uploadedCvId}`);
 }
 

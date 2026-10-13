@@ -59,6 +59,10 @@ export async function processCvExtraction(
 
     return { ok: true };
   } catch (err) {
+    // The only place this failure is recorded — without this, a thrown
+    // error here (a bad API key, a provider outage, a parsing failure)
+    // vanishes into the returned value with no trace in Vercel's logs.
+    console.error("CV extraction failed", { uploadedCvId, error: err });
     await supabase.from("uploaded_cvs").update({ status: "failed" }).eq("id", uploadedCvId);
     return { ok: false, error: err instanceof Error ? err.message : "Extraction failed." };
   }

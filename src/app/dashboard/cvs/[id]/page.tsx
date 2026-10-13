@@ -63,8 +63,8 @@ export default async function CvDetailPage({
       <p className="text-sm text-ink/50">{cv.original_filename}</p>
       <h1 className="mt-1 font-serif text-2xl text-ink">Review extracted details</h1>
 
-      {searchParams.error && (
-        <p className="mt-4 rounded-sm border border-amber/40 bg-amber/10 px-4 py-3 text-sm text-amber-dark">
+      {searchParams.error && cv.status !== "failed" && (
+        <p className="mt-4 rounded-sm border border-amber/40 bg-amber/10 px-4 py-3 text-sm text-ink">
           {searchParams.error}
         </p>
       )}
@@ -78,8 +78,8 @@ export default async function CvDetailPage({
       {cv.status === "failed" && (
         <div className="mt-8 rounded-sm border border-amber/40 bg-amber/10 px-6 py-8">
           <p className="text-ink/80">
-            We couldn&rsquo;t extract this CV automatically. This usually means the file
-            is a scanned/image-only document rather than text.
+            {searchParams.error ??
+              "We couldn\u2019t extract this CV automatically. A scanned or image-only document is the most common cause \u2014 otherwise, try again."}
           </p>
           <form action={retryExtraction.bind(null, cv.id)} className="mt-4">
             <button

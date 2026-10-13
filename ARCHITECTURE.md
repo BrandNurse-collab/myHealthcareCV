@@ -242,8 +242,8 @@ action re-runs from the failed stage, not from checkout.
 
 `src/lib/ai/provider.ts` defines one interface —
 `complete({ system, prompt, model?, maxTokens?, jsonMode? })` — and a factory
-that reads `AI_PROVIDER` and returns either `AnthropicProvider` or
-`OpenAIProvider`. Both call their provider's REST API directly with `fetch`
+that reads `AI_PROVIDER` and returns `AnthropicProvider`, `OpenAIProvider`, or
+`GeminiProvider`. All three call their provider's REST API directly with `fetch`
 rather than pulling in an SDK: Section 26 asks to avoid unnecessary
 dependencies, and a raw `fetch` to one JSON endpoint doesn't earn a
 dependency the way multi-file SDKs with their own retry/streaming/telemetry

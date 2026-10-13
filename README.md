@@ -146,7 +146,7 @@ before relying on either prompt's output quality.
 ## Tech stack
 
 Next.js 14 (App Router) + TypeScript + Tailwind CSS · Supabase (Postgres,
-Auth, Storage) · Paystack · Anthropic/OpenAI behind a provider abstraction ·
+Auth, Storage) · Paystack · Anthropic/OpenAI/Gemini behind a provider abstraction ·
 `pdf-parse` + `mammoth` for CV text extraction · Vercel-compatible
 deployment. Document generation (Phase 5) should reuse the Node `docx` and
 `pptxgenjs` libraries already in use elsewhere in Find Nurses NG's tooling,

@@ -2,6 +2,12 @@
 // on this for financial reporting (Section 14 / 29), and update it here —
 // not scattered through the codebase — when prices change. Last checked
 // against published Anthropic rates in Sept 2026.
+//
+// No Gemini entry: on the free tier (see .env.example) real cost is $0, and
+// exact current free-tier model names change often enough that a guessed
+// price here could be wrong. An unpriced model safely logs tokens with
+// estimated_cost_usd = 0 rather than a fabricated number — add a real entry
+// here if/when moving Gemini to its paid tier.
 const PRICING_PER_MILLION_TOKENS: Record<string, { input: number; output: number }> = {
   "claude-sonnet-5": { input: 2, output: 10 },
   "claude-sonnet-4-6": { input: 3, output: 15 },

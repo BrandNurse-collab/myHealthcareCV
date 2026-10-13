@@ -18,7 +18,7 @@ export interface CompletionRequest {
 
 export interface CompletionResult {
   text: string;
-  provider: "anthropic" | "openai";
+  provider: "anthropic" | "openai" | "gemini";
   model: string;
   inputTokens: number;
   outputTokens: number;
@@ -28,7 +28,7 @@ export interface AIProvider {
   complete(request: CompletionRequest): Promise<CompletionResult>;
 }
 
-export type AIProviderName = "anthropic" | "openai";
+export type AIProviderName = "anthropic" | "openai" | "gemini";
 
 /**
  * Returns the configured provider. Reads AI_PROVIDER once per call rather than
@@ -47,6 +47,12 @@ export async function getAIProvider(providerName?: AIProviderName): Promise<AIPr
     case "openai": {
       const { OpenAIProvider } = await import("./providers/openai");
       return new OpenAIProvider();
+    }
+    case "gemini": {
+      // Free tier, no card required — see ARCHITECTURE.md § AI architecture
+      // for why this exists alongside Anthropic/OpenAI.
+      const { GeminiProvider } = await import("./providers/gemini");
+      return new GeminiProvider();
     }
     default:
       throw new Error(`Unknown AI_PROVIDER: ${name}`);

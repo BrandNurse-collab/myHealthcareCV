@@ -99,7 +99,9 @@ create table public.uploaded_cvs (
 
 create table public.cv_extracted_data (
   id                uuid primary key default gen_random_uuid(),
-  uploaded_cv_id    uuid not null references public.uploaded_cvs(id) on delete cascade,
+  uploaded_cv_id    uuid not null unique references public.uploaded_cvs(id) on delete cascade,
+  -- unique: one row per CV — process-extraction.ts upserts onConflict
+  -- "uploaded_cv_id", which Postgres refuses to run at all without this.
   structured_data   jsonb not null,          -- name, contact, employment, education... (Section 5)
   extraction_model  text,
   reviewed_by_user  boolean not null default false,

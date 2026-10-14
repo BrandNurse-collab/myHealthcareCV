@@ -23,7 +23,7 @@ export async function extractJobDescription(rawJdText: string): Promise<JobAnaly
     prompt: rawJdText,
     model: env.ai.fastModel(), // structured categorization, not creative writing — see ARCHITECTURE.md § AI architecture
     jsonMode: true,
-    maxTokens: 4096,
+    maxTokens: 8192, // raised from 4096 — same reasoning as extract-structured.ts
     temperature: 0,
   });
 

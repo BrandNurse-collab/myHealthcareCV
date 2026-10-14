@@ -23,7 +23,7 @@ export async function extractStructuredCv(rawCvText: string): Promise<Extraction
     prompt: rawCvText,
     model: env.ai.fastModel(), // extraction is well-specified; the cheaper/faster model is enough — see ARCHITECTURE.md § AI architecture
     jsonMode: true,
-    maxTokens: 4096,
+    maxTokens: 8192, // raised from 4096 — a detailed CV's structured JSON can genuinely run long; truncation produces unparseable output, not just a short result
     temperature: 0, // extraction should be deterministic, not creative
   });
 

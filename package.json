@@ -9,7 +9,7 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "test": "tsx tests/match-engine.test.ts && tsx tests/gemini-provider.test.ts && tsx tests/match-pipeline.test.ts && tsx --tsconfig tsconfig.test.json tests/match-view.test.tsx && tsx tests/cost.test.ts"
+    "test": "tsx tests/match-engine.test.ts && tsx tests/gemini-provider.test.ts && tsx tests/json-parser.test.ts && tsx tests/match-pipeline.test.ts && tsx --tsconfig tsconfig.test.json tests/match-view.test.tsx && tsx tests/cost.test.ts"
   },
   "dependencies": {
     "next": "^14.2.5",

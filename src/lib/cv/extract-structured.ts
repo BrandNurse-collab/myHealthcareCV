@@ -1,4 +1,5 @@
 import { getAIProvider } from "@/lib/ai/provider";
+import { completeWithRetry } from "@/lib/ai/retry";
 import {
   EXTRACTION_SYSTEM_PROMPT,
   EXTRACTION_PROMPT_VERSION,
@@ -18,7 +19,7 @@ export interface ExtractionResult {
 export async function extractStructuredCv(rawCvText: string): Promise<ExtractionResult> {
   const provider = await getAIProvider();
 
-  const result = await provider.complete({
+  const result = await completeWithRetry(provider, {
     system: EXTRACTION_SYSTEM_PROMPT,
     prompt: rawCvText,
     model: env.ai.fastModel(), // extraction is well-specified; the cheaper/faster model is enough — see ARCHITECTURE.md § AI architecture

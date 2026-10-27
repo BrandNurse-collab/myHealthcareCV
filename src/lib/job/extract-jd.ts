@@ -1,4 +1,5 @@
 import { getAIProvider } from "@/lib/ai/provider";
+import { completeWithRetry } from "@/lib/ai/retry";
 import {
   JOB_ANALYSIS_SYSTEM_PROMPT,
   JOB_ANALYSIS_PROMPT_VERSION,
@@ -18,7 +19,7 @@ export interface JobAnalysisResult {
 export async function extractJobDescription(rawJdText: string): Promise<JobAnalysisResult> {
   const provider = await getAIProvider();
 
-  const result = await provider.complete({
+  const result = await completeWithRetry(provider, {
     system: JOB_ANALYSIS_SYSTEM_PROMPT,
     prompt: rawJdText,
     model: env.ai.fastModel(), // structured categorization, not creative writing — see ARCHITECTURE.md § AI architecture

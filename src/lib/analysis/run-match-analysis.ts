@@ -1,4 +1,5 @@
 import { getAIProvider } from "@/lib/ai/provider";
+import { completeWithRetry } from "@/lib/ai/retry";
 import {
   MATCHING_SYSTEM_PROMPT,
   MATCHING_PROMPT_VERSION,
@@ -56,7 +57,7 @@ export async function runMatchAnalysis(
     },
   };
 
-  const result = await provider.complete({
+  const result = await completeWithRetry(provider, {
     system: MATCHING_SYSTEM_PROMPT,
     prompt: JSON.stringify(payload),
     model: env.ai.model(), // the stronger model on purpose — this is the analysis the user pays to see; see ARCHITECTURE.md
